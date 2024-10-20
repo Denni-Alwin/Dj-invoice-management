@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dj Invoice management</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-screen flex flex-row">
+
+    <!-- Sidebar -->
+    <aside class="w-64 h-full bg-base-200 shadow-lg flex-shrink-0">
+        <div class="p-5">
+            <h2 class="text-2xl font-bold text-primary">Dj Computer</h2>
+            <ul class="menu p-4 space-y-6" style="margin-top: 30px;">
+                <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('home'); getAllInvoices(); fetchTotalAmount(); fetchPendingStatus(); fetchPendingInvoiceCount(); fetchPaidInvoiceCount();">Dashboard</a></li>
+                <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('about'); clearValuesOnSearch()">Contacts</a></li>
+                <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('services'); getAllInvoices()">Invoice</a></li>
+                <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('invoice'); clearValuesOnSearch()">Update Invoice</a></li>
+
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col justify-between bg-base-100">
+                  <div class="relative">
+                    <label class="swap swap-rotate absolute right-20 top-12">
+                      <!-- this hidden checkbox controls the state -->
+                      <input type="checkbox" class="theme-controller" value="synthwave" />
+                    
+                      <!-- sun icon -->
+                      <svg
+                        class="swap-off h-10 w-10 fill-current"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24">
+                        <path
+                          d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+                      </svg>
+                    
+                      <!-- moon icon -->
+                      <svg
+                        class="swap-on h-10 w-10 fill-current"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24">
+                        <path
+                          d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+                      </svg>
+                    </label>
+                  </div>
+
+                  <main class="p-10 flex-grow">
+                    <section id="home" class="content-section">
+                        <h1 class="text-2xl font-bold">Dashboard</h1>
+                            <div class="cards inline-flex space-x-40 ml-40">  
+                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 ml-[10px] flex-grow place-items-center">
+                                        <div class="stat">
+                                        <div class="stat-title">Total Rotation</div>
+                                        <div class="stat-value text-green-500" id="total-amount">0</div>
+                                        </div>
+                                </div>
+                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 ml-[10px] flex-grow place-items-center">
+                                    <div class="stat">
+                                    <div class="stat-title">Pending Invoice</div>
+                                    <div class="stat-value text-orange-600" id="pending-invoice-count">0</div>
+                                    </div>
+                                </div>
+                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 ml-[10px] flex-grow place-items-center">
+                                    <div class="stat">
+                                    <div class="stat-title">Paid Invoice</div>
+                                    <div class="stat-value text-accent" id="paid-invoice-count">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div>
+
+                          <div class="btn-invoice mt-[20px] mb-5">
+                            <button class="btn btn-outline btn-success" onclick="my_modal_3.showModal()">Create Invoice</button>
+                              <dialog id="my_modal_3" class="modal">
+                                <div class="modal-box w-11/12 max-w-4xl">
+                                  <form method="dialog">
+                                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                  </form>
+                                  <h3 class="text-lg font-bold mb-9">Create Invoice</h3>
+                                  <div class="text relative top-9 mr-10">Client Name</div>
+                                  <input type="text" id="client_name" class="input input-bordered w-full max-w-xs ml-20 mb-6 relative left-20"/>
+                                  <div class="text relative top-9 mr-10">Contact</div>
+                                  <input type="text" id="contact" class="input input-bordered w-full max-w-xs ml-20 mb-6 relative left-20"/>
+                                  <div class="text relative top-9 mr-10">Type of product</div>
+                                    <select id="product_type" class="select select-bordered w-full max-w-xs ml-20 mb-6 relative left-20">
+                                      <option>Laptop</option>
+                                      <option>Monitor</option>
+                                      <option>Printer</option>
+                                      <option>Mobile</option>
+                                      <option>TV</option>
+                                      <option>Inverter</option>
+                                    </select>
+
+                                  <div class="text relative top-9 mr-10">Product Description</div>
+                                  <input type="text" id="product_description" class="input input-bordered w-full max-w-xs ml-20 mb-6 relative left-20"/>
+                                  <div class="text relative top-9 mr-10">Damage/Problem</div>
+                                  <input type="text" id="damage_problem" class="input input-bordered w-full max-w-xs ml-20 mb-6 relative left-20"/>
+                                  <div class="text relative top-9 mr-10">Address</div>
+                                  <input type="text" id="address" class="input input-bordered w-full max-w-xs ml-20 mb-6 relative left-20"/>
+                                  <button onclick="addInvoice()" class="btn btn-outline btn-success relative top-20 mb-20 p-4 left-40">Add</button>
+                                  <div class="result" id="addResult"></div>
+                                </div>   
+                              </dialog>
+                          </div>
+
+                          <div class="overflow-y-auto" style="width: 1700px; height: 400px;">
+                                <table class="table mt-2">
+                                  <!-- head -->
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Description</th>
+                                      <th>Type of Product</th>
+                                      <th>Job Status</th>
+                                      <th>Payment Status</th>
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="data-table-body">
+                                </table>
+                            </div>      
+            </section>
+
+            <section id="about" class="content-section hidden">
+                <h1 class="text-4xl font-bold">Get Contact of Client</h1>
+                 <div class="flex flex-row gap-5 ml-20 relative">
+                  <p class="text-1xl font-bold top-[50px] relative">Search Client Name / InvoiceId</p>
+                  <input id="search-invoice-search" type="text" class="input input-bordered input-accent w-full max-w-xs relative top-10"/>
+                  <button class="btn btn-outline btn-success relative top-[38px]" onclick="fetchInvoiceDetails()">Search</button>
+                </div>
+                <div class="divider mt-24">Client Contact Details</div>
+                <div class="flex flex-row gap-5 ml-20 relative">
+                  <p class="text-1xl font-bold top-[50px] relative">Client Name :</p>
+                  <p id="contact-client-name" class="text-1xl font-bold top-[50px] relative"></p>
+                </div>
+                <div class="flex flex-row gap-5 ml-20 relative">
+                  <p class="text-1xl font-bold top-[50px] relative">Contact :</p>
+                  <p id="contact-client-contact" class="text-1xl font-bold top-[50px] relative"></p>
+                </div>
+                <div class="flex flex-row gap-5 ml-20 relative">
+                  <p class="text-1xl font-bold top-[50px] relative">Address :</p>
+                  <p id="contact-client-address" class="text-1xl font-bold top-[50px] relative"></p>
+                </div>
+            </section>
+
+            <section id="services" class="content-section hidden">
+                <h1 class="text-4xl font-bold mb-[50px]">Invoice Overview</h1>
+                <div class="overflow-x-auto" style="width: 1620px; height: 600px;">
+                  <table class="table table-xs">
+                    <thead>
+                      <tr>
+                        <th>S.no</th>
+                        <th>Invoice Id</th>
+                        <th>Client Name</th>
+                        <th>Contact</th>
+                        <th>Added Date</th>
+                        <th>Product Type</th>
+                        <th>Product description</th>
+                        <th>Damage/Problem</th>
+                        <th>JobStatus</th>
+                        <th>PaymentStatus</th>
+                        <th>OverallStatus</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody id="invoice-overview">
+                  </table>
+                </div>
+            </section>
+
+         <!-- Update Invoice Section -->
+          <section id="invoice" class="content-section">
+            <h1 class="text-4xl font-bold">Update Invoice</h1>
+            <div class="flex flex-row gap-5 ml-20 relative">
+              <p class="text-1xl font-bold top-[50px] relative">Search Client Name / InvoiceId</p>
+              <input id="search-invoice" type="text" class="input input-bordered input-accent w-full max-w-xs relative top-10"/>
+              <button class="btn btn-outline btn-success relative top-[38px]" onclick="fetchInvoiceDetails()">Search</button>
+              <button class="btn btn-outline btn-error relative top-[38px]" onclick="clearValuesOnSearch()">Clear</button>
+            </div>
+            <div class="divider mt-24">Client Details</div>
+            <div id="search-invoice-details" class="flex flex-row items-center gap-8 mt-8">
+              <div class="flex flex-col items-start">
+                <label class="text mb-5">Client Name</label>
+                <input id="search-invoice-client-name" type="text" class="input input-bordered w-full max-w-xs"/>
+              </div>
+              <div class="flex flex-col items-start ml-20">
+                <label class="text mb-5">Contact</label>
+                <input id="search-invoice-contact" type="text" class="input input-bordered w-full max-w-xs"/>
+              </div>
+              <div class="flex flex-col items-start ml-20">
+                <label class="text mb-5">Product Type</label>
+                <select id="search-invoice-product-type" class="select select-bordered w-full">
+                  <option>Laptop</option>
+                  <option>Monitor</option>
+                  <option>Printer</option>
+                  <option>Mobile</option>
+                  <option>TV</option>
+                  <option>Inverter</option>
+                </select>
+              </div>
+              <div class="flex flex-col items-start ml-20">
+                <label class="text mb-5">Product description</label>
+                <input id="search-invoice-product-description" type="text" class="input input-bordered w-full max-w-xs"/>
+              </div>
+            </div>
+
+            <div id="search-invoice-details" class="flex flex-row items-center gap-8 mt-8">
+              <div class="flex flex-col items-start">
+                <label class="text mb-5">Damage/Problem</label>
+                <input id="search-invoice-damage-problem" type="text" class="input input-bordered w-full max-w-xs"/>
+              </div>
+              <div class="flex flex-col items-start">
+                <label class="text mb-5">JobStatus</label>
+                <select id="search-invoice-jobstatus" class="select select-bordered w-full">
+                  <option value="YET-TO">YET-TO</option>
+                  <option value="DELIVERED">DELIVERED</option>
+                </select>
+              </div>
+              <div class="flex flex-col items-start">
+                <label class="text mb-5">PaymentStatus</label>
+                <select id="search-invoice-paymentstatus" class="select select-bordered w-full">
+                  <option value="UNPAID">UNPAID</option>
+                  <option value="PAID">PAID</option>
+                </select>
+              </div>
+              <div class="flex flex-col items-start">
+                <label class="text mb-5">OverallStatus</label>
+                <select id="search-invoice-overallstatus" class="select select-bordered w-full">
+                  <option value="PENDING">PENDING</option>
+                  <option value="COMPLETED">COMPLETED</option>
+                </select>
+              </div>
+              <div class="flex flex-col items-start ml-20">
+                <label class="text mb-5">Amount</label>
+                <input id="search-invoice-amount" type="text" class="input input-bordered w-full max-w-xs"/>
+              </div>
+              <div class="flex flex-col items-start ml-20 mr-10">
+                <label class="text mb-5">Address</label>
+                <input id="search-invoice-address" type="text" class="input input-bordered w-full max-w-xs"/>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-primary relative top-[100px] left-[640px]" onclick="updateInvoice()">Update Client Details</button>
+            <button class="btn btn-outline btn-error relative top-[100px] left-[640px] ml-[90px]" onclick="confirmAction()">Delete Invoice</button>
+            <div id="response-message" class="mt-20"></div>
+        </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer p-10 bg-base-300 text-base-content">
+            <div>
+
+            </div>
+            <div>
+
+            </div>
+            <div>
+                <span class="footer-title">Company</span>
+                <a href="https://www.justdial.com/Kodaikanal/DJ-Computers-Near-Moonjikal-bus-stop/9999P4542-4542-130801103404-K3G7DC_BZDET" class="link link-hover">About us</a>
+                <a href="https://www.justdial.com/Kodaikanal/DJ-Computers-Near-Moonjikal-bus-stop/9999P4542-4542-130801103404-K3G7DC_BZDET" class="link link-hover">Contact</a>
+                <a hidden href="https://denni-alwin.github.io/" class="link link-hover relative left-[340px]">Designed by Denni Alwin</a>
+            </div>
+        </footer>
+    </div>  
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+              function showContent(sectionId) {
+              // Hide all sections
+              const sections = document.querySelectorAll('.content-section');
+              sections.forEach(section => section.classList.add('hidden'));
+
+              // Show the selected section
+              document.getElementById(sectionId).classList.remove('hidden');
+          }
+
+          // Show the home content by default when the page loads
+          showContent('home');
+
+          async function addInvoice() {
+              // Collect data from form inputs
+              const clientName = document.getElementById('client_name').value;
+              const contact = document.getElementById('contact').value;
+              const productType = document.getElementById('product_type').value;
+              const productDescription = document.getElementById('product_description').value;
+              const damageProblem = document.getElementById('damage_problem').value;
+              const address = document.getElementById('address').value;
+              const jobStatus = "YET-TO";
+              const paymentStatus = "UNPAID";
+              const overallStatus = "PENDING";
+              const amount = 0;
+              const completedDate = 0;
+
+              // Create the payload for the API request
+              const invoiceData = {
+                  client_name: clientName,
+                  contact: contact,
+                  product_type: productType,
+                  product_description: productDescription,
+                  damage_problem: damageProblem,
+                  address: address,
+                  job_status: jobStatus,
+                  payment_status: paymentStatus,
+                  overall_status: overallStatus,
+                  amount: amount,
+                  completed_date: completedDate
+              };
+
+              try {
+                  // Make the API request to add the invoice
+                  const response = await fetch('/add_invoice', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(invoiceData)
+                  });
+
+                  const result = await response.json();
+
+                  // Display the result message
+                  const resultDiv = document.getElementById('addResult');
+                  if (response.ok) {
+                      resultDiv.textContent = result.message;
+                      resultDiv.style.color = 'green'; // Success message
+                  } else {
+                      resultDiv.textContent = result.error;
+                      resultDiv.style.color = 'red'; // Error message
+                  }
+              } catch (error) {
+                  console.error('Error adding invoice:', error);
+                  const resultDiv = document.getElementById('addResult');
+                  resultDiv.textContent = 'An error occurred while adding the invoice.';
+                  resultDiv.style.color = 'red'; // Error message
+              }
+              getAllInvoices();
+              fetchTotalAmount();
+              fetchPendingStatus();
+              fetchPendingInvoiceCount();  
+              fetchPaidInvoiceCount();
+          }
+
+          async function getInvoice(buttonElement) {
+            
+            const invoiceid = buttonElement.getAttribute('data-invoice-id');
+              const response = await fetch(`/get_invoice_by_id/${invoiceid}`);
+              const entry = await response.json();
+              const tableBody = document.getElementById('client_invoice'+invoiceid);
+              tableBody.innerHTML = '';
+                  const row = document.createElement('th');
+                  row.innerHTML = `
+                  <div id="client_invoice_details" class="overflow-x-auto">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Invoice Id</th>
+                        <th>Client Name</th>
+                        <th>Contact</th>
+                        <th>Added Date</th>
+                        <th>Product Type</th>
+                        <th>Product description</th>
+                        <th>Damage/Problem</th>
+                        <th>JobStatus</th>
+                        <th>PaymentStatus</th>
+                        <th>OverallStatus</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <th>${entry.invoice_id}</th>
+                        <th>${entry.client_name}</th>
+                        <th>${entry.contact}</th>
+                        <th>${entry.added_date}</th>
+                        <th>${entry.product_type}</th>
+                        <th>${entry.product_description}</th>
+                        <th>${entry.damage_problem}</th>
+                        <th><div class="badge badge-secondary badge-outline">${entry.job_status}</div></th>
+                        <th><div class="badge badge-accent">${entry.payment_status}</div></th>
+                        <th><div class="badge badge-error badge-outline">${entry.overall_status}</div></th>
+                        <th>${entry.amount}</th>
+                         </tbody>
+                  </table>
+                </div>
+                        
+                    `;
+                  tableBody.appendChild(row);
+          }
+
+          async function fetchInvoiceDetails() 
+          {
+            clearValuesOnSearch()
+            let  identifier = document.getElementById('search-invoice').value;
+            if (!identifier) {
+              identifier = document.getElementById('search-invoice-search').value;
+              if (!identifier) {
+                alert('Please enter a client name or invoice ID.');
+                return;
+              }
+            }
+
+            try {
+                const response = await fetch(`/get_invoice_details?identifier=${identifier}`);
+                const data = await response.json();
+
+                const detailsContainer = document.getElementById('search-invoice');
+                // detailsContainer.innerHTML = '';  // Clear previous results
+              console.log(data);
+              if (response.ok) {
+                document.getElementById('search-invoice-client-name').value = data.client_name;
+                document.getElementById('search-invoice-contact').value = data.contact;
+                document.getElementById('search-invoice-product-type').value = data.product_type;
+                document.getElementById('search-invoice-address').value = data.address;
+                document.getElementById('search-invoice-product-description').value = data.product_description;
+                document.getElementById('search-invoice-jobstatus').value = data.job_status;
+                document.getElementById('search-invoice-paymentstatus').value = data.payment_status;
+                document.getElementById('search-invoice-overallstatus').value = data.overall_status;
+                document.getElementById('search-invoice-amount').value = data.amount;
+                document.getElementById('search-invoice-damage-problem').value = data.damage_problem;
+                
+                const clientnameElement = document.getElementById('contact-client-name')
+                if (clientnameElement)
+                {
+                  clientnameElement.textContent += "  " + data.client_name;
+                  document.getElementById('contact-client-contact').textContent += "  " + data.contact;
+                  document.getElementById('contact-client-address').textContent += "  " + data.address;
+                }
+                } else {
+                    detailsContainer.innerHTML = `<p class="text-red-500 font-bold">${data.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Error fetching invoice details:', error);
+                alert('Failed to fetch invoice details. Please try again later.');
+            }
+        }
+
+        async function updateInvoice() 
+        {
+            const identifier = document.getElementById('search-invoice').value;
+            const clientName = document.getElementById('search-invoice-client-name').value;
+            const contact = document.getElementById('search-invoice-contact').value;
+            const productType = document.getElementById('search-invoice-product-type').value;
+            const productDescription = document.getElementById('search-invoice-product-description').value;
+            const address = document.getElementById('search-invoice-address').value;
+            const jobStatus = document.getElementById('search-invoice-jobstatus').value;
+            const paymentStatus = document.getElementById('search-invoice-paymentstatus').value;
+            const overallStatus = document.getElementById('search-invoice-overallstatus').value;
+            const amount = document.getElementById('search-invoice-amount').value;
+            const damageProblem = document.getElementById('search-invoice-damage-problem').value;
+
+            const updateFields = {};
+
+            if (clientName) updateFields.client_name = clientName;
+            if (contact) updateFields.contact = contact;
+            if (productType) updateFields.product_type = productType;
+            if (productDescription) updateFields.product_description = productDescription;
+            if (address) updateFields.address = address;
+            if (jobStatus) updateFields.job_status = jobStatus;
+            if (paymentStatus) updateFields.payment_status = paymentStatus;
+            if (overallStatus) updateFields.overall_status = overallStatus;
+            if (amount) updateFields.amount = parseFloat(amount);
+            if (damageProblem) updateFields.damage_problem = damageProblem;
+
+            try {
+                const response = await fetch('/update_invoice', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    
+                    body: JSON.stringify({ identifier, update_fields: updateFields }),
+                });
+                const result = await response.json();
+                document.getElementById('response-message').textContent = result.message || result.error;
+            } catch (error) {
+                document.getElementById('response-message').textContent = 'Error updating invoice. Please try again.';
+                console.error('Error:', error);
+            }
+            setTimeout(() => {document.getElementById('response-message').textContent = '';}, 5000);
+        }
+
+        async function clearValuesOnSearch() 
+        {
+          document.getElementById('search-invoice-client-name').value = "";
+          document.getElementById('search-invoice-contact').value = "";
+          document.getElementById('search-invoice-product-type').value = "";
+          document.getElementById('search-invoice-product-description').value = "";
+          document.getElementById('search-invoice-jobstatus').value = "";
+          document.getElementById('search-invoice-paymentstatus').value = "";
+          document.getElementById('search-invoice-overallstatus').value = "";
+          document.getElementById('search-invoice-amount').value = "";
+          document.getElementById('search-invoice-address').value = "";
+          document.getElementById('search-invoice-damage-problem').value = "";
+          document.getElementById('contact-client-contact').textContent = "";
+          document.getElementById('contact-client-address').textContent = "";
+          document.getElementById('contact-client-name').textContent = "";
+        }
+
+          async function fetchPendingStatus() 
+          {
+            try {
+                const response = await fetch('/get_pending_status');
+                const pendingEntries = await response.json();
+              const tableBody = document.getElementById('data-table-body');
+              tableBody.innerHTML = '';  // Clear existing table rows
+              
+              pendingEntries.forEach(entry => {
+                  const row = document.createElement('tr');
+                  row.innerHTML = `    
+                      <tr>
+                        <td>
+                          <div class="flex items-center gap-3">
+                            </div>
+                            <div>
+                              <div class="font-bold">${entry.client_name}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          ${entry.product_description}
+                        </td>
+                        <td>${entry.product_type}</td>
+                        <td>
+                          <div class="badge badge-secondary badge-outline">${entry.job_status}</div>
+                        </td>
+                        <td>
+                          <div class="badge badge-accent badge-accent">${entry.payment_status}</div>
+                        </td>
+                        <th>
+                          <button id="details" data-invoice-id="${entry.invoice_id}" class="btn" onclick="my_modal_4${entry.invoice_id}.showModal(); getInvoice(this)">Details</button>
+                          <dialog id="my_modal_4${entry.invoice_id}" class="modal">
+                            <div class="modal-box w-11/12 max-w-[1420px] h-[190px]">
+                              <form method="dialog">
+                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="document.getElementById('client_invoice_details').remove()">✕</button>
+                              </form>
+                              <h3 id="client_invoice${entry.invoice_id}" class="text-lg font-bold"></h3>
+                            </div>
+                          </dialog>
+                        </th>
+                      </tr>
+                  `;
+                  tableBody.appendChild(row);
+                });
+
+               
+            } catch (error) {
+                console.error('Error fetching pending status:', error);
+            }
+        }
+
+
+          async function getAllInvoices() {
+              const response = await fetch('/get_all_invoices');
+              const result = await response.json();
+
+              const invoicetableBody = document.getElementById('invoice-overview');
+              let count = 1;
+              invoicetableBody.innerHTML = '';
+              result.forEach(entry => {
+                  const invoicerow = document.createElement('tr');
+                  invoicerow.innerHTML = ` 
+                        <th>${count}</th>
+                        <th>${entry.invoice_id}</th>
+                        <th>${entry.client_name}</th>
+                        <th>${entry.contact}</th>
+                        <th>${entry.added_date}</th>
+                        <th>${entry.product_type}</th>
+                        <th>${entry.product_description}</th>
+                        <th>${entry.damage_problem}</th>
+                        <th><div class="badge badge-secondary badge-outline">${entry.job_status}</div></th>
+                        <th><div class="badge badge-accent">${entry.payment_status}</div></th>
+                        <th><div class="badge badge-error badge-outline">${entry.overall_status}</div></th>
+                        <th>${entry.amount}</th>
+                    `;
+                 
+                invoicetableBody.appendChild(invoicerow);
+                count++
+                  
+              });
+          }
+
+          async function deleteInvoice() {
+              const clientName = document.getElementById('search-invoice').value;
+              const response = await fetch(`/delete_invoice/${clientName}`, { method: 'DELETE' });
+              const result = await response.json();
+              document.getElementById('deleteResult').innerText = JSON.stringify(result);
+          }
+
+         async function confirmAction() {
+            // Show confirmation dialog
+            const userConfirmed = confirm("Are you sure you want to proceed?");
+            if (userConfirmed) {
+                // User clicked "OK"
+                deleteInvoice();
+                alert("Invoice Delete Successfully!");
+                // Place the action you want to perform here
+                // For example, delete an item or submit a form
+            } else {
+                // User clicked "Cancel"
+                alert("Action canceled!");
+            }
+        }
+          async function fetchTotalAmount() {
+            try {
+                const response = await fetch('/get_total_amount');
+                const data = await response.json();
+                const totalAmountElement = document.getElementById('total-amount');
+                totalAmountElement.textContent = `₹${data.total_amount}`; // Display the amount in the HTML
+            } catch (error) {
+                console.error('Error fetching the total amount:', error);
+                document.getElementById('total-amount').textContent = 'Error loading amount.';
+            }
+        }
+
+        async function fetchPendingInvoiceCount() {
+          try {
+              const response = await fetch('/get_pending_invoice_count');
+              const result = await response.json();
+              const pendingCountElement = document.getElementById('pending-invoice-count');
+              pendingCountElement.textContent = result.pending_invoice_count;
+          } catch (error) {
+              console.error('Error fetching pending invoice count:', error);
+          }
+          }
+
+          // Function to fetch and display the count of paid invoices
+          async function fetchPaidInvoiceCount() {
+              try {
+                  const response = await fetch('/get_paid_invoice_count');
+                  const result = await response.json();
+                  const paidCountElement = document.getElementById('paid-invoice-count');
+                  paidCountElement.textContent = result.paid_invoice_count;
+              } catch (error) {
+                  console.error('Error fetching paid invoice count:', error);
+              }
+          }
+
+
+          window.onload = function() {
+              getAllInvoices();
+              fetchTotalAmount();
+              fetchPendingStatus();
+              fetchPendingInvoiceCount();  
+              fetchPaidInvoiceCount();
+          };
+    </script>
+        <style>
+          body {
+              transform: scale(0.9); /* Scale down to 90% */
+              transform-origin: top left; /* Keep scaling from the top left corner */
+              width: 111.11%; /* Adjust width to maintain layout */
+              overflow-x: hidden; /* Prevent horizontal scroll */
+          }
+      </style>
+  
+</body>
+</html>
