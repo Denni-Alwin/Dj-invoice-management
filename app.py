@@ -26,6 +26,7 @@ def create_table():
         job_status TEXT,
         payment_status TEXT,
         overall_status TEXT,
+        given_amount REAL DEFAULT 0,
         amount REAL,
         added_date TEXT,
         completed_date TEXT
@@ -56,6 +57,7 @@ def add_invoice():
     payment_status = data.get('payment_status')
     overall_status = data.get('overall_status')
     amount = data.get('amount')
+    given_amount = data.get('given_amount', 0)  # Default to 0 if not provided
     added_date = datetime.now().strftime('%B %d, %Y, %I:%M %p') # Current date and time in ISO format
     completed_date = data.get('completed_date')
 
@@ -66,9 +68,9 @@ def add_invoice():
     connection = get_db_connection()
     cursor = connection.cursor()
     cursor.execute('''
-    INSERT INTO invoice_data (client_name, contact, product_type, product_description, damage_problem, address, job_status, payment_status, overall_status, amount, added_date, completed_date) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
-    ''', (client_name, contact, product_type, product_description, damage_problem, address, job_status, payment_status, overall_status, amount, added_date, completed_date))
+    INSERT INTO invoice_data (client_name, contact, product_type, product_description, damage_problem, address, job_status, payment_status, overall_status, amount, given_amount, added_date, completed_date) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+    ''', (client_name, contact, product_type, product_description, damage_problem, address, job_status, payment_status, overall_status, amount, given_amount, added_date, completed_date))
     connection.commit()
     connection.close()
 
@@ -96,6 +98,7 @@ def get_invoice(client_name):
             'payment_status': result['payment_status'],
             'overall_status': result['overall_status'],
             'amount': result['amount'],
+            'given_amount' : result['given_amount'],
             'added_date': result['added_date'],
             'completed_date': result['completed_date']
         }), 200
@@ -115,6 +118,29 @@ def get_total_amount():
         return jsonify({'total_amount': result['total_amount']}), 200
     else:
         return jsonify({'total_amount': 0}), 200
+
+
+# API endpoint to calculate amount_to_be_collected
+@app.route('/get_amount_to_be_collected', methods=['GET'])
+def get_amount_to_be_collected():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Query to calculate the total amount and the sum of given_amount
+    cursor.execute('SELECT SUM(amount) as total_amount, SUM(given_amount) as total_given FROM invoice_data')
+    result = cursor.fetchone()
+    connection.close()
+
+    # Calculate the balance
+    total_amount = result['total_amount'] if result['total_amount'] is not None else 0
+    total_given = result['total_given'] if result['total_given'] is not None else 0
+    balance_amount = total_amount - total_given
+
+    return jsonify({
+        'total_amount': total_amount,
+        'total_given': total_given,
+        'amount_to_be_collected': balance_amount
+    }), 200
 
 
 # API endpoint to update an invoice using client_name or invoice_id
@@ -190,6 +216,7 @@ def get_pending_status():
             'payment_status': row['payment_status'],
             'overall_status': row['overall_status'],
             'amount': row['amount'],
+            'given_amount' : row['given_amount'],
             'added_date': row['added_date'],
             'completed_date': row['completed_date']
         } for row in results
@@ -251,6 +278,7 @@ def get_invoice_by_id(invoice_id):
             'payment_status': result['payment_status'],
             'overall_status': result['overall_status'],
             'amount': result['amount'],
+            'given_amount' : result['given_amount'],
             'added_date': result['added_date'],
             'completed_date': result['completed_date']
         }), 200
@@ -290,6 +318,7 @@ def get_invoice_details():
             'payment_status': result['payment_status'],
             'overall_status': result['overall_status'],
             'amount': result['amount'],
+            'given_amount' : result['given_amount'],
             'added_date': result['added_date'],
             'completed_date': result['completed_date']
         }), 200
@@ -320,6 +349,7 @@ def get_all_invoices():
             'payment_status': row['payment_status'],
             'overall_status': row['overall_status'],
             'amount': row['amount'],
+            'given_amount' : row['given_amount'],
             'added_date': row['added_date'],
             'completed_date': row['completed_date']
         } for row in results

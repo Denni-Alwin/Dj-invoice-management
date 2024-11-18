@@ -14,7 +14,7 @@
         <div class="p-5">
             <h2 class="text-2xl font-bold text-primary">Dj Computer</h2>
             <ul class="menu p-4 space-y-6" style="margin-top: 30px;">
-                <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('home'); getAllInvoices(); fetchTotalAmount(); fetchPendingStatus(); fetchPendingInvoiceCount(); fetchPaidInvoiceCount();">Dashboard</a></li>
+                <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('home'); getAmountToBeCollected(); getAllInvoices(); fetchTotalAmount(); fetchPendingStatus(); fetchPendingInvoiceCount(); fetchPaidInvoiceCount();">Dashboard</a></li>
                 <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('about'); clearValuesOnSearch()">Contacts</a></li>
                 <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('services'); getAllInvoices()">Invoice</a></li>
                 <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('invoice'); clearValuesOnSearch()">Update Invoice</a></li>
@@ -53,20 +53,26 @@
                   <main class="p-10 flex-grow">
                     <section id="home" class="content-section">
                         <h1 class="text-2xl font-bold">Dashboard</h1>
-                            <div class="cards inline-flex space-x-40 ml-40">  
-                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 ml-[10px] flex-grow place-items-center">
+                            <div class="cards inline-flex space-x-20 ml-40">  
+                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 flex-grow place-items-center">
                                         <div class="stat">
                                         <div class="stat-title">Total Rotation</div>
                                         <div class="stat-value text-green-500" id="total-amount">0</div>
                                         </div>
                                 </div>
-                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 ml-[10px] flex-grow place-items-center">
+                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 flex-grow place-items-center">
+                                  <div class="stat">
+                                  <div class="stat-title">Amount Collection</div>
+                                  <div class="stat-value text-red-500" id="total-amount-collection">0</div>
+                                  </div>
+                                </div>
+                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 flex-grow place-items-center">
                                     <div class="stat">
                                     <div class="stat-title">Pending Invoice</div>
                                     <div class="stat-value text-orange-600" id="pending-invoice-count">0</div>
                                     </div>
                                 </div>
-                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 ml-[10px] flex-grow place-items-center">
+                                <div class="card bg-base-300 rounded-box grid h-32 w-72 mt-6 flex-grow place-items-center">
                                     <div class="stat">
                                     <div class="stat-title">Paid Invoice</div>
                                     <div class="stat-value text-accent" id="paid-invoice-count">0</div>
@@ -119,6 +125,7 @@
                                       <th>Type of Product</th>
                                       <th>Job Status</th>
                                       <th>Payment Status</th>
+                                      <th>Given Amount</th>
                                       <th></th>
                                     </tr>
                                   </thead>
@@ -133,9 +140,10 @@
                   <p class="text-1xl font-bold top-[50px] relative">Search Client Name / InvoiceId</p>
                   <input id="search-invoice-search" type="text" class="input input-bordered input-accent w-full max-w-xs relative top-10"/>
                   <button class="btn btn-outline btn-success relative top-[38px]" onclick="fetchInvoiceDetails()">Search</button>
+                  <button class="btn btn-outline btn-error relative top-[38px]" onclick="clearValuesOnSearch()">Clear</button>
                 </div>
                 <div class="divider mt-24">Client Contact Details</div>
-                <div class="flex flex-row gap-5 ml-20 relative">
+                <!-- <div class="flex flex-row gap-5 ml-20 relative">
                   <p class="text-1xl font-bold top-[50px] relative">Client Name :</p>
                   <p id="contact-client-name" class="text-1xl font-bold top-[50px] relative"></p>
                 </div>
@@ -146,6 +154,42 @@
                 <div class="flex flex-row gap-5 ml-20 relative">
                   <p class="text-1xl font-bold top-[50px] relative">Address :</p>
                   <p id="contact-client-address" class="text-1xl font-bold top-[50px] relative"></p>
+                </div> -->
+                <div class="stats shadow relative h-[100px] w-[300px] left-[100px] overflow-hidden">
+                  <div class="stat">
+                    <svg class="absolute" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/><circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/></svg>
+                    <div class="collapse-title text-xl ml-[70px]" id="contact-client-name"></div>
+                  </div>
+                </div>
+
+                <div class="stats shadow relative h-[100px] w-[300px] right-[200px] top-[140px] overflow-hidden">
+                  <div class="stat">
+                    <svg class="absolute" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#e28743" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <div class="collapse-title text-xl ml-[70px]" id="contact-client-product"></div>
+                  </div>
+                </div>
+
+
+                <div class="stats shadow relative h-[100px] w-[300px] mt-20 left-[190px] overflow-hidden">
+                  <div class="stat">
+                    <svg class="absolute" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <div class="collapse-title text-xl ml-[70px]" id="contact-client-contact"></div>
+                  </div>
+                </div>
+
+                <div class="stats shadow relative h-[100px] w-[300px] top-[140px] right-[100px] overflow-hidden">
+                  <div class="stat">
+                    <svg class="absolute" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/><path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/></svg>
+                    <div class="collapse-title text-xl ml-[70px]" id="contact-client-address"></div>
+                  </div>
+                </div>
+
+                <div class="relative">
+                  <ul class="steps absolute mt-[230px] ml-[460px] w-[830px]">
+                    <li data-content="●" class="step step-primary">YET-TO</li>
+                    <li data-content="★" class="step" id="progress-service">SERVICED</li>
+                    <li data-content="✓" class="step" id="progress-delivery">DELIVERED</li>
+                  </ul>
                 </div>
             </section>
 
@@ -189,11 +233,11 @@
                 <label class="text mb-5">Client Name</label>
                 <input id="search-invoice-client-name" type="text" class="input input-bordered w-full max-w-xs"/>
               </div>
-              <div class="flex flex-col items-start ml-20">
+              <div class="flex flex-col items-start ml-[10px]">
                 <label class="text mb-5">Contact</label>
                 <input id="search-invoice-contact" type="text" class="input input-bordered w-full max-w-xs"/>
               </div>
-              <div class="flex flex-col items-start ml-20">
+              <div class="flex flex-col items-start ml-[10px]">
                 <label class="text mb-5">Product Type</label>
                 <select id="search-invoice-product-type" class="select select-bordered w-full">
                   <option>Laptop</option>
@@ -208,7 +252,12 @@
                 <label class="text mb-5">Product description</label>
                 <input id="search-invoice-product-description" type="text" class="input input-bordered w-full max-w-xs"/>
               </div>
+              <div class="flex flex-col items-start ml-[10px] mr-10">
+                <label class="text mb-5">Address</label>
+                <input id="search-invoice-address" type="text" class="input input-bordered w-full max-w-xs"/>
+              </div>
             </div>
+            
 
             <div id="search-invoice-details" class="flex flex-row items-center gap-8 mt-8">
               <div class="flex flex-col items-start">
@@ -236,18 +285,18 @@
                   <option value="COMPLETED">COMPLETED</option>
                 </select>
               </div>
-              <div class="flex flex-col items-start ml-20">
+              <div class="flex flex-col items-start ml-[10px]">
                 <label class="text mb-5">Amount</label>
                 <input id="search-invoice-amount" type="text" class="input input-bordered w-full max-w-xs"/>
               </div>
-              <div class="flex flex-col items-start ml-20 mr-10">
-                <label class="text mb-5">Address</label>
-                <input id="search-invoice-address" type="text" class="input input-bordered w-full max-w-xs"/>
+              <div class="flex flex-col items-start ml-[10px]">
+                <label class="text mb-5">Given Amount</label>
+                <input id="search-invoice-given-amount" type="text" class="input input-bordered w-full max-w-xs"/>
               </div>
             </div>
             <button class="btn btn-outline btn-primary relative top-[100px] left-[640px]" onclick="updateInvoice()">Update Client Details</button>
             <button class="btn btn-outline btn-error relative top-[100px] left-[640px] ml-[90px]" onclick="confirmAction()">Delete Invoice</button>
-            <div id="response-message" class="mt-20"></div>
+            <div id="response-message" class="mt-[165px] "></div>
         </section>
         </main>
 
@@ -344,6 +393,7 @@
               fetchPendingStatus();
               fetchPendingInvoiceCount();  
               fetchPaidInvoiceCount();
+              getAmountToBeCollected();
           }
 
           async function getInvoice(buttonElement) {
@@ -410,8 +460,12 @@
 
                 const detailsContainer = document.getElementById('search-invoice');
                 // detailsContainer.innerHTML = '';  // Clear previous results
-              console.log(data);
-              if (response.ok) {
+              console.log(response.status);
+              if (response.status === 404)
+              {
+                detailsContainer.innerHTML = `<p class="text-red-500 font-bold">${data.error}</p>`;
+              }
+              if (response.ok || data != null) {
                 document.getElementById('search-invoice-client-name').value = data.client_name;
                 document.getElementById('search-invoice-contact').value = data.contact;
                 document.getElementById('search-invoice-product-type').value = data.product_type;
@@ -422,13 +476,24 @@
                 document.getElementById('search-invoice-overallstatus').value = data.overall_status;
                 document.getElementById('search-invoice-amount').value = data.amount;
                 document.getElementById('search-invoice-damage-problem').value = data.damage_problem;
+                document.getElementById('search-invoice-given-amount').value = data.given_amount;
+
                 
                 const clientnameElement = document.getElementById('contact-client-name')
                 if (clientnameElement)
                 {
                   clientnameElement.textContent += "  " + data.client_name;
-                  document.getElementById('contact-client-contact').textContent += "  " + data.contact;
+                  document.getElementById('contact-client-contact').textContent += "+91  " + data.contact;
+                  document.getElementById('contact-client-product').textContent += "  " + data.product_description;
                   document.getElementById('contact-client-address').textContent += "  " + data.address;
+                }
+                if(data.job_status != "YET-TO")
+                {
+                  document.getElementById('progress-service').classList.add('step-primary');
+                }
+                if(data.overall_status != "PENDING")
+                {
+                  document.getElementById('progress-delivery').classList.add('step-primary');
                 }
                 } else {
                     detailsContainer.innerHTML = `<p class="text-red-500 font-bold">${data.error}</p>`;
@@ -452,6 +517,7 @@
             const overallStatus = document.getElementById('search-invoice-overallstatus').value;
             const amount = document.getElementById('search-invoice-amount').value;
             const damageProblem = document.getElementById('search-invoice-damage-problem').value;
+            const givenAmount = document.getElementById('search-invoice-given-amount').value;
 
             const updateFields = {};
 
@@ -465,6 +531,7 @@
             if (overallStatus) updateFields.overall_status = overallStatus;
             if (amount) updateFields.amount = parseFloat(amount);
             if (damageProblem) updateFields.damage_problem = damageProblem;
+            if (givenAmount) updateFields.given_amount = givenAmount;
 
             try {
                 const response = await fetch('/update_invoice', {
@@ -476,9 +543,9 @@
                     body: JSON.stringify({ identifier, update_fields: updateFields }),
                 });
                 const result = await response.json();
-                document.getElementById('response-message').textContent = result.message || result.error;
+                document.getElementById('response-message').innerHTML = '<div role="alert" class="alert alert-info"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Invoice Updated Successfully.</span></div>';
             } catch (error) {
-                document.getElementById('response-message').textContent = 'Error updating invoice. Please try again.';
+                document.getElementById('response-message').innerHTML = '<div role="alert" class="alert alert-error"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Error! updating invoice. Please try again.</span></div>';
                 console.error('Error:', error);
             }
             setTimeout(() => {document.getElementById('response-message').textContent = '';}, 5000);
@@ -496,9 +563,17 @@
           document.getElementById('search-invoice-amount').value = "";
           document.getElementById('search-invoice-address').value = "";
           document.getElementById('search-invoice-damage-problem').value = "";
-          document.getElementById('contact-client-contact').textContent = "";
-          document.getElementById('contact-client-address').textContent = "";
-          document.getElementById('contact-client-name').textContent = "";
+          document.getElementById('search-invoice-given-amount').value = "";
+          if(document.getElementById('contact-client-contact') != null)
+          {
+            document.getElementById('contact-client-contact').textContent = "";
+            document.getElementById('contact-client-address').textContent = "";
+            document.getElementById('contact-client-name').textContent = "";
+            document.getElementById('contact-client-product').textContent = "";
+          }
+          document.getElementById('progress-service').classList.remove('step-primary');
+          document.getElementById('progress-delivery').classList.remove('step-primary');
+
         }
 
           async function fetchPendingStatus() 
@@ -531,6 +606,9 @@
                         <td>
                           <div class="badge badge-accent badge-accent">${entry.payment_status}</div>
                         </td>
+                        <td>
+                          <div class="badge badge-success badge-success">₹${entry.given_amount}</div>
+                        </td>
                         <th>
                           <button id="details" data-invoice-id="${entry.invoice_id}" class="btn" onclick="my_modal_4${entry.invoice_id}.showModal(); getInvoice(this)">Details</button>
                           <dialog id="my_modal_4${entry.invoice_id}" class="modal">
@@ -552,7 +630,6 @@
                 console.error('Error fetching pending status:', error);
             }
         }
-
 
           async function getAllInvoices() {
               const response = await fetch('/get_all_invoices');
@@ -613,7 +690,19 @@
                 totalAmountElement.textContent = `₹${data.total_amount}`; // Display the amount in the HTML
             } catch (error) {
                 console.error('Error fetching the total amount:', error);
-                document.getElementById('total-amount').textContent = 'Error loading amount.';
+                document.getElementById('total-amount').textContent = 'Error';
+            }
+        }
+
+        async function getAmountToBeCollected() {
+            try {
+                const response = await fetch('/get_amount_to_be_collected');
+                const data = await response.json();
+                const totalAmountElement = document.getElementById('total-amount-collection');
+                totalAmountElement.textContent = `₹${data.amount_to_be_collected}`; // Display the amount in the HTML
+            } catch (error) {
+                console.error('Error fetching the total amount:', error);
+                document.getElementById('total-amount-collection').textContent = 'Error';
             }
         }
 
@@ -647,6 +736,7 @@
               fetchPendingStatus();
               fetchPendingInvoiceCount();  
               fetchPaidInvoiceCount();
+              getAmountToBeCollected();
           };
     </script>
         <style>
