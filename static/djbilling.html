@@ -18,7 +18,7 @@
                 <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('about'); clearValuesOnSearch()">Contacts</a></li>
                 <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('services'); getAllInvoices()">Invoice</a></li>
                 <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('invoice'); clearValuesOnSearch()">Update Invoice</a></li>
-
+                <li><a href="#" class="menu-item hover:bg-primary hover:text-white" onclick="showContent('invoice-maker'); clearValuesOnSearch()">Make Invoice Bill</a></li>
             </ul>
         </div>
     </aside>
@@ -144,54 +144,44 @@
                   <button class="btn btn-outline btn-error relative top-[38px]" onclick="clearValuesOnSearch()">Clear</button>
                 </div>
                 <div class="divider mt-24">Client Contact Details</div>
-                <!-- <div class="flex flex-row gap-5 ml-20 relative">
-                  <p class="text-1xl font-bold top-[50px] relative">Client Name :</p>
-                  <p id="contact-client-name" class="text-1xl font-bold top-[50px] relative"></p>
-                </div>
-                <div class="flex flex-row gap-5 ml-20 relative">
-                  <p class="text-1xl font-bold top-[50px] relative">Contact :</p>
-                  <p id="contact-client-contact" class="text-1xl font-bold top-[50px] relative"></p>
-                </div>
-                <div class="flex flex-row gap-5 ml-20 relative">
-                  <p class="text-1xl font-bold top-[50px] relative">Address :</p>
-                  <p id="contact-client-address" class="text-1xl font-bold top-[50px] relative"></p>
-                </div> -->
-                <div class="flex gap-60 mt-[50px]">
-                  <div class="stats shadow relative h-[50px] w-[300px] left-[100px] h-auto">
-                    <div class="stat flex justify-center gap-8">
-                      <svg class="" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/><circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/></svg>
-                      <div class="text-xl mt-[10px]" id="contact-client-name"></div>
+                <div id="client-contact-details" class="hidden">
+                  <div class="flex gap-60 mt-[50px] ml-">
+                    <div class="stats shadow relative h-[50px] w-[300px] left-[100px] h-auto">
+                      <div class="stat flex gap-8">
+                        <svg class="" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/><circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/></svg>
+                        <div class="text-xl mt-[10px]" id="contact-client-name"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="stats shadow relave h-[50px] w-[300px] h-auto">
-                    <div class="stat flex justify-center gap-8">
-                      <svg class="" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#e28743" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                      <div class="text-xl mt-[10px]" id="contact-client-product"></div>
+                    <div class="stats shadow relative h-[50px] w-[300px] h-auto">
+                      <div class="stat flex gap-8">
+                        <svg class="" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#e28743" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                        <div class="text-xl mt-[10px]" id="contact-client-product"></div>
+                      </div>
                     </div>
-                  </div>
-              </div>
+                </div>
 
-              <div class="flex gap-60 mt-[50px]">
-                <div class="stats shadow relative h-[50px] w-[300px] left-[100px] h-auto overflow-hidden">
-                  <div class="stat flex justify-center gap-8">
-                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <div class="text-xl mt-[10px]" id="contact-client-contact"></div>
+                <div class="flex gap-60 mt-[50px]">
+                  <div class="stats shadow relative h-[50px] w-[300px] left-[100px] h-auto overflow-hidden">
+                    <div class="stat flex gap-8">
+                      <svg class="" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <div class="text-xl mt-[10px]" id="contact-client-contact"></div>
+                    </div>
+                  </div>
+                  <div class="stats shadow relative  h-[50px] w-[300px] h-auto overflow-hidden">
+                    <div class="stat flex gap-8">
+                      <svg class="" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/><path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/></svg>
+                      <div class="text-xl mt-[10px]" id="contact-client-address"></div>
+                    </div>
                   </div>
                 </div>
-                <div class="stats shadow relative  h-[50px] w-[300px] h-auto overflow-hidden">
-                  <div class="stat flex justify-center gap-8">
-                    <svg class="" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/><path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/></svg>
-                    <div class="text-xl mt-[10px]" id="contact-client-address"></div>
+                  <div class="relative mt-[150px] ml-[460px]">
+                    <ul class="steps absolute w-[830px]">
+                      <li data-content="●" class="step step-primary">YET-TO</li>
+                      <li data-content="★" class="step" id="progress-service">SERVICED</li>
+                      <li data-content="✓" class="step" id="progress-delivery">DELIVERED</li>
+                    </ul>
                   </div>
-                </div>
-              </div>
-                <div class="relative mt-[150px] ml-[460px]">
-                  <ul class="steps absolute w-[830px]">
-                    <li data-content="●" class="step step-primary">YET-TO</li>
-                    <li data-content="★" class="step" id="progress-service">SERVICED</li>
-                    <li data-content="✓" class="step" id="progress-delivery">DELIVERED</li>
-                  </ul>
-                </div>
+                  </div>
                 <div id="response-message-get-info" class="mt-[265px] "></div>
             </section>
 
@@ -300,8 +290,110 @@
             <button class="btn btn-outline btn-error relative top-[100px] left-[640px] ml-[90px]" onclick="confirmAction()">Delete Invoice</button>
             <div id="response-message" class="mt-[165px] "></div>
         </section>
-        </main>
 
+        <!-- invoice-maker -->
+        <section id="invoice-maker" class="content-section">
+          <h1 class="text-4xl font-bold">Invoice Maker</h1>
+           <div class="flex flex-row"> 
+            <div class="top-[30px] left-10 relative">
+              <div role="tablist" class="tabs tabs-bordered">
+                <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Client Info" checked="checked"/>
+                <div role="tabpanel" class="tab-content p-7">
+                  <p class="text-1xl mb-[20px] font-bold">Client Info</p>
+                    <div class="flex flex-col space-y-5">
+                      <input type="text" placeholder="Invoice Id" id="bill-invoiceid" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="Date" id="bill-date" class="input input-bordered w-full max-w-xs" />
+                      <select id="bill-paymenttype" class="select select-bordered w-full max-w-xsrelative">
+                        <option>Cash</option>
+                        <option>GooglePay</option>
+                        <option>PhonePay</option>
+                        <option>Card</option>
+                        <option>UPI</option>
+                      </select>
+                      <div class="p-5"></div>
+                      <input type="text" placeholder="Client Name / Company Name" id="bill-clientname" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="Address line 1" id="bill-addressline1" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="Address line 2" id="bill-addressline2" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="City" id="bill-city" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="ZIP/ pincode" id="bill-zipcode" class="input input-bordered w-full max-w-xs" />
+                    </div>
+                    <button class="btn btn-info mt-[20px]" onclick="AddBillInfo()">Add Info</button>
+                </div>
+                <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Add Items" />
+                <div role="tabpanel" class="tab-content p-7">
+                    <p class="text-1xl mb-[20px] font-bold">Add Items</p>
+                    <div class="flex flex-col space-y-5">
+                      <input type="text" placeholder="Item" id="bill-item" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="Description" id="bill-description" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="Quantity" id="bill-quantity" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="Tax" id="bill-tax" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="Amount" id="bill-amount" class="input input-bordered w-full max-w-xs" />
+                    </div>
+                    <button class="btn btn-info mt-[20px]" onclick="AddItemsToBill()">Add Item</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="print-area" class="w-[1200px] left-[250px] relative">
+              <!-- Invoice Box -->
+              <div class="w-2/3 bg-gray-800 p-10 rounded-lg shadow-lg">
+                <!-- Header -->
+                <h1 class="text-5xl font-bold text-purple-400 relative top-[42px]">Invoice</h1>
+                <div class="flex flex-col justify-end items-end mb-20">
+                  <p class="text-1xl font-bold text-purple-400 mb-2" id="bill-invoiceid-placeholder" >Invoice Id : -----</p>
+                  <p class="text-1xl font-bold text-purple-400 mb-2" id="bill-invoicedate-placeholder">Date : ---------</p>
+                </div>
+                <div class="flex justify-between items-center border-b border-gray-700 pb-4">
+                  <div class="flex-col ">
+                    <h1 class="text-3xl font-bold text-purple-400">Dj Computer</h1>
+                    <h1 class="text-2xl font-bold text-purple-400 mb-5">Sales & Service</h1>
+                    <p>St. Annes Complex</p>
+                    <p>Moonjikal</p>
+                    <p>Kodaikanal-624101</p>
+                    <p>Cell : +91 9842369490</p>
+                  </div>
+                  <div class="flex-col">
+                    <h1 class="text-3xl font-bold text-purple-400 mb-5" id="bill-clientname-placeholder">To</h1>
+                    <p id="bill-addressline1-placeholder">---------</p>
+                    <p id="bill-addressline2-placeholder">---------</p>
+                    <p id="bill-city-placeholder">---------</p>
+                    <p class="flex justify-end items-end font-bold text-purple-400 mt-5 mr-20" style="font-size: x-small;" id="bill-paymenttype-placeholder">Payment mode : -----</p>
+                  </div>
+                </div>
+
+                <!-- Invoice Table -->
+                <table class="table-auto w-full mt-6 text-sm text-gray-300">
+                  <thead class="bg-gray-700 text-purple-400">
+                    <tr>
+                      <th class="px-4 py-2 text-left">Item</th>
+                      <th class="px-4 py-2 text-left">Description</th>
+                      <th class="px-4 py-2 text-right">Quantity</th>
+                      <th class="px-4 py-2 text-right">Tax</th>
+                      <th class="px-4 py-2 text-right">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bill-elements">
+                    <!-- Add more rows as needed -->
+                  </tbody>
+                </table>
+                
+                <div class="flex justify-between items-end border-b border-gray-700 pb-4"></div>
+                <div class="flex flex-col justify-end items-end mb-5 mr-5 mt-5">
+                  <p id="bill-totall">Totall  ________</p>
+                </div>
+                <div class="flex justify-between items-end border-b border-gray-700 pb-4"></div>
+                <div class="flex flex-row justify-between mt-2">
+                  <p style="font-size: x-small; margin-left: 10px;">E&0.E</p>
+                  <p style="font-size: x-small;">GOODS ONCE SOLD WILL NOT BE RETURNED</p>
+                  <p style="font-size: x-small; margin-right: 10px;">Thank you!</p>
+                </div>
+              </div>
+              <button id="print-btn" class="btn btn-success left-[700px] mt-5 relative" onclick="printInvoice('print-area')">Print Bill</button>
+            </div>
+          </div>
+          <div id="bill-alert" class="mt-20"></div>
+        </section>
+        </main>
         <!-- Footer -->
         <footer class="footer p-10 bg-base-300 text-base-content">
             <div>
@@ -398,6 +490,69 @@
               getAmountToBeCollected();
           }
 
+          let billTotalAmount = 0;
+          async function AddItemsToBill()
+          {
+            const item =  document.getElementById('bill-item').value;
+            const description =  document.getElementById('bill-description').value;
+            const quantity =  document.getElementById('bill-quantity').value;
+            const tax =  document.getElementById('bill-tax').value;
+            const amount =  document.getElementById('bill-amount').value;
+            for (let i = 0; i < quantity; i++) 
+            {
+              billTotalAmount += +amount + +tax;
+            }
+            if(item != "" && description != "")
+            {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                      <td class="px-4 py-2">${item}</td>
+                      <td class="px-4 py-2">${description}</td>
+                      <td class="px-4 py-2 text-right">${quantity}</td>
+                      <td class="px-4 py-2 text-right">${tax}₹</td>
+                      <td class="px-4 py-2 text-right">${amount}₹</td>`;
+
+              document.getElementById('bill-elements').append(row)
+              document.getElementById('bill-totall').innerHTML = `Totall ${billTotalAmount} ₹`;
+
+              document.getElementById('bill-alert').innerHTML = '<div role="alert" class="alert alert-info"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Item Added Successfully.</span></div>';
+            }
+            else
+            {
+              document.getElementById('bill-alert').innerHTML = '<div role="alert" class="alert alert-error"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Error! Empty entry found</span></div>';
+            }
+            setTimeout(() => {document.getElementById('bill-alert').textContent = '';}, 3000);
+          }
+
+          async function AddBillInfo()
+          {
+            const invoiceid =  document.getElementById('bill-invoiceid').value;
+            const date =  document.getElementById('bill-date').value;
+            const paymentype =  document.getElementById('bill-paymenttype').value;
+            const clientname =  document.getElementById('bill-clientname').value;
+            const addressline1 =  document.getElementById('bill-addressline1').value;
+            const addressline2 =  document.getElementById('bill-addressline2').value;
+            const city =  document.getElementById('bill-city').value;
+            const zipcode =  document.getElementById('bill-zipcode').value;
+            if(invoiceid != "" && clientname != "" && addressline1 != "")
+            {
+              document.getElementById('bill-invoiceid-placeholder').innerHTML = "Invoice Id : "+invoiceid;
+              document.getElementById('bill-invoicedate-placeholder').innerHTML = "Date : "+date;
+              document.getElementById('bill-paymenttype-placeholder').innerHTML = "Payment mode : " +paymentype;
+              document.getElementById('bill-clientname-placeholder').innerHTML = clientname;
+              document.getElementById('bill-addressline1-placeholder').innerHTML = addressline1;
+              document.getElementById('bill-addressline2-placeholder').innerHTML = addressline2;
+              document.getElementById('bill-city-placeholder').innerHTML = city + " - " + zipcode;
+
+              document.getElementById('bill-alert').innerHTML = '<div role="alert" class="alert alert-info"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Client Info Updated Successfully.</span></div>';
+            }
+            else
+            {
+              document.getElementById('bill-alert').innerHTML = '<div role="alert" class="alert alert-error"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>Error! Empty entry found</span></div>';
+            }
+            setTimeout(() => {document.getElementById('bill-alert').textContent = '';}, 3000);
+          }
+
           async function getInvoice(buttonElement) {
             
             const invoiceid = buttonElement.getAttribute('data-invoice-id');
@@ -449,6 +604,7 @@
             let  identifier = document.getElementById('search-invoice').value;
             if (!identifier) {
               identifier = document.getElementById('search-invoice-search').value;
+              document.getElementById('client-contact-details').className = '';
               if (!identifier) {
                 alert('Please enter a client name or invoice ID.');
                 return;
@@ -580,6 +736,19 @@
           document.getElementById('progress-service').classList.remove('step-primary');
           document.getElementById('progress-delivery').classList.remove('step-primary');
 
+          document.getElementById('bill-invoiceid').value = "";
+          document.getElementById('bill-date').value = "";
+          document.getElementById('bill-clientname').value = "";
+          document.getElementById('bill-addressline1').value = "";
+          document.getElementById('bill-addressline2').value = "";
+          document.getElementById('bill-city').value = "";
+          document.getElementById('bill-zipcode').value = "";
+
+          document.getElementById('bill-item').value = "";
+          document.getElementById('bill-description').value = "" ;
+          document.getElementById('bill-quantity').value = "";
+          document.getElementById('bill-tax').value = "";
+          document.getElementById('bill-amount').value = "";
         }
 
           async function fetchPendingStatus() 
@@ -734,7 +903,26 @@
                   console.error('Error fetching paid invoice count:', error);
               }
           }
+          async function printInvoice(divId) 
+          {
+            const printContents = document.getElementById(divId).innerHTML;
+            const originalContents = document.body.innerHTML;
+            const originalClasses = document.body.className; // Store the original classes
+            document.body.className = '';
 
+            document.body.innerHTML = printContents;
+            document.getElementById("print-btn").remove();
+            document.body.style.justifyContent = "center";
+            document.body.style.marginTop = "50px";
+            document.body.style.width = "1600px";
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+            document.body.className = originalClasses; // Restore the original classes
+
+            location.reload();
+          }
 
           window.onload = function() {
               getAllInvoices();
