@@ -10,7 +10,7 @@
 <body class="h-screen flex flex-row">
 
     <!-- Sidebar -->
-    <aside class="w-64 h-full bg-base-200 shadow-lg flex-shrink-0">
+    <aside class="w-64 h-[1500px] bg-base-200 shadow-lg flex-shrink-0">
         <div class="p-5">
             <h2 class="text-2xl font-bold text-primary">Dj Computer</h2>
             <ul class="menu p-4 space-y-6" style="margin-top: 30px;">
@@ -326,19 +326,19 @@
                       <input type="text" placeholder="Item" id="bill-item" class="input input-bordered w-full max-w-xs" />
                       <input type="text" placeholder="Description" id="bill-description" class="input input-bordered w-full max-w-xs" />
                       <input type="text" placeholder="Quantity" id="bill-quantity" class="input input-bordered w-full max-w-xs" />
-                      <input type="text" placeholder="Tax" id="bill-tax" class="input input-bordered w-full max-w-xs" />
-                      <input type="text" placeholder="Amount" id="bill-amount" class="input input-bordered w-full max-w-xs" />
+                      <input type="text" placeholder="Tax" id="bill-tax" class="input input-bordered w-full max-w-xs" value="0"/>
+                      <input type="text" placeholder="Amount" id="bill-amount" class="input input-bordered w-full max-w-xs" value="0"/>
                     </div>
                     <button class="btn btn-info mt-[20px]" onclick="AddItemsToBill()">Add Item</button>
                 </div>
               </div>
             </div>
 
-            <div id="print-area" class="w-[1200px] left-[250px] relative">
+            <div id="print-area" class="w-[1200px] left-[250px] top-20 relative">
               <!-- Invoice Box -->
               <div class="w-2/3 bg-gray-800 p-10 rounded-lg shadow-lg">
                 <!-- Header -->
-                <h1 class="text-5xl font-bold text-purple-400 relative top-[42px]">Invoice</h1>
+                <h1 class="text-5xl font-bold text-purple-400 relative top-[40px]">Invoice</h1>
                 <div class="flex flex-col justify-end items-end mb-20">
                   <p class="text-1xl font-bold text-purple-400 mb-2" id="bill-invoiceid-placeholder" >Invoice Id : -----</p>
                   <p class="text-1xl font-bold text-purple-400 mb-2" id="bill-invoicedate-placeholder">Date : ---------</p>
@@ -395,7 +395,7 @@
         </section>
         </main>
         <!-- Footer -->
-        <footer class="footer p-10 bg-base-300 text-base-content">
+        <footer class="footer p-10 bg-base-300 text-base-content fixed top-[1340px]">
             <div>
 
             </div>
@@ -915,12 +915,8 @@
             document.body.style.justifyContent = "center";
             document.body.style.marginTop = "50px";
             document.body.style.width = "1600px";
-
             window.print();
-
             document.body.innerHTML = originalContents;
-            document.body.className = originalClasses; // Restore the original classes
-
             location.reload();
           }
 
