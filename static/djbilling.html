@@ -336,7 +336,7 @@
 
             <div id="print-area" class="w-[1200px] left-[250px] top-20 relative">
               <!-- Invoice Box -->
-              <div class="w-2/3 bg-gray-800 p-10 rounded-lg shadow-lg">
+              <div style="color: white;" class="w-2/3 p-10 rounded-lg shadow-lg">
                 <!-- Header -->
                 <h1 class="text-5xl font-bold text-purple-400 relative top-[40px]">Invoice</h1>
                 <div class="flex flex-col justify-end items-end mb-20">
@@ -347,17 +347,17 @@
                   <div class="flex-col ">
                     <h1 class="text-3xl font-bold text-purple-400">Dj Computer</h1>
                     <h1 class="text-2xl font-bold text-purple-400 mb-5">Sales & Service</h1>
-                    <div class="text" style="color :white;">St. Annes Complex</div>
-                    <div class="text" style="color :white;">Moonjikal</div>
-                    <div class="text" style="color :white;">Kodaikanal-624101</div>
-                    <div class="text" style="color :white;">Cell : +91 9842369490</div>
+                    <p>St. Annes Complex</p>
+                    <p>Moonjikal</p>
+                    <p>Kodaikanal-624101</p>
+                    <p>Cell : +91 9842369490</p>
                   </div>
                   <div class="flex-col">
                     <h1 class="text-3xl font-bold text-purple-400 mb-5" id="bill-clientname-placeholder">To</h1>
-                    <div class="text" style="color :white;" id="bill-addressline1-placeholder">---------</div>
-                    <div class="text" style="color :white;" id="bill-addressline2-placeholder">---------</div>
-                    <div class="text" style="color :white;" id="bill-city-placeholder">---------</div>
-                    <div class="flex justify-end items-end font-bold text-purple-400 mt-5 mr-20" style="font-size: x-small;" id="bill-paymenttype-placeholder">Payment mode : -----</div>
+                    <p id="bill-addressline1-placeholder">---------</p>
+                    <p id="bill-addressline2-placeholder">---------</p>
+                    <p id="bill-city-placeholder">---------</p>
+                    <p class="flex justify-end items-end font-bold text-purple-400 mt-5 mr-20" style="font-size: x-small;" id="bill-paymenttype-placeholder">Payment mode : -----</p>
                   </div>
                 </div>
 
@@ -379,13 +379,13 @@
                 
                 <div class="flex justify-between items-end border-b border-gray-700 pb-4"></div>
                 <div class="flex flex-col justify-end items-end mb-5 mr-5 mt-5">
-                  <p class="text" style="color :white;" id="bill-totall">Totall  ________</p>
+                  <p id="bill-totall">Totall  ________</p>
                 </div>
                 <div class="flex justify-between items-end border-b border-gray-700 pb-4"></div>
                 <div class="flex flex-row justify-between mt-2">
-                  <div class="text" style="color :white;" style="font-size: x-small; margin-left: 10px;">E&0.E</div>
-                  <div class="text" style="color :white;" style="font-size: x-small;">GOODS ONCE SOLD WILL NOT BE RETURNED</div>
-                  <div class="text" style="color :white;" style="font-size: x-small; margin-right: 10px;">Thank you!</div>
+                  <p style="font-size: x-small; margin-left: 10px;">E&0.E</p>
+                  <p style="font-size: x-small;">GOODS ONCE SOLD WILL NOT BE RETURNED</p>
+                  <p style="font-size: x-small; margin-right: 10px;">Thank you!</p>
                 </div>
               </div>
               <button id="print-btn" class="btn btn-success left-[700px] mt-5 relative" onclick="printInvoice('print-area')">Print Bill</button>
