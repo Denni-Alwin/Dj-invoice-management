@@ -336,7 +336,7 @@
 
             <div id="print-area" class="w-[1200px] left-[250px] top-20 relative">
               <!-- Invoice Box -->
-              <div style="color: white;" class="w-2/3 bg-gray-800 p-10 rounded-lg shadow-lg">
+              <div style="color: white;" id="invoice-box" class="w-2/3 bg-gray-800 p-10 rounded-lg shadow-lg">
                 <!-- Header -->
                 <h1 class="text-5xl font-bold text-purple-400 relative top-[40px]">Invoice</h1>
                 <div class="flex flex-col justify-end items-end mb-20">
@@ -509,7 +509,7 @@
                       <td class="px-4 py-2">${item}</td>
                       <td class="px-4 py-2">${description}</td>
                       <td class="px-4 py-2 text-right">${quantity}</td>
-                      <td class="px-4 py-2 text-right">${tax}₹</td>
+                      <td class="px-4 py-2 text-right">${tax}</td>
                       <td class="px-4 py-2 text-right">${amount}₹</td>`;
 
               document.getElementById('bill-elements').append(row)
@@ -709,6 +709,8 @@
                 console.error('Error:', error);
             }
             setTimeout(() => {document.getElementById('response-message').textContent = '';}, 5000);
+            clearValuesOnSearch();
+            document.getElementById('search-invoice').value = "";
         }
 
         async function clearValuesOnSearch() 
@@ -725,7 +727,7 @@
           document.getElementById('search-invoice-damage-problem').value = "";
           document.getElementById('search-invoice-given-amount').value = "";
           document.getElementById('search-invoice-search').value = "";
-          document.getElementById('search-invoice').value = "";
+          //document.getElementById('search-invoice').value = "";
           if(document.getElementById('contact-client-contact') != null)
           {
             document.getElementById('contact-client-contact').textContent = "";
@@ -909,14 +911,17 @@
             const originalContents = document.body.innerHTML;
             const originalClasses = document.body.className; // Store the original classes
             document.body.className = '';
-
+            
             document.body.innerHTML = printContents;
             document.getElementById("print-btn").remove();
             document.body.style.justifyContent = "center";
             document.body.style.marginTop = "50px";
             document.body.style.width = "1600px";
+            document.getElementById("invoice-box").style.color = "black";
+            document.getElementById("bill-elements").style.color = "black";
+            document.getElementById("invoice-box").style.backgroundColor = "white";
             window.print();
-            document.body.innerHTML = originalContents;
+            //document.body.innerHTML = originalContents;
             location.reload();
           }
 
