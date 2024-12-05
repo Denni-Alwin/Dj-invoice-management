@@ -439,6 +439,7 @@
               const overallStatus = "PENDING";
               const amount =  document.getElementById('amount').value;
               const completedDate = 0;
+              const givenAmount = 0;
 
               // Create the payload for the API request
               const invoiceData = {
@@ -452,7 +453,8 @@
                   payment_status: paymentStatus,
                   overall_status: overallStatus,
                   amount: amount,
-                  completed_date: completedDate
+                  completed_date: completedDate,
+                  given_amount: givenAmount
               };
 
               try {
