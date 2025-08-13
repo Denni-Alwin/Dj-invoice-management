@@ -120,6 +120,11 @@ def get_total_amount():
         return jsonify({'total_amount': 0}), 200
 
 
+
+@app.route('/servercheck', methods=['GET'])
+def server_check():
+        return jsonify("Server Up and running"), 200
+
 # API endpoint to calculate amount_to_be_collected
 @app.route('/get_amount_to_be_collected', methods=['GET'])
 def get_amount_to_be_collected():
